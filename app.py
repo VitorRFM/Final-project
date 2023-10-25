@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_file
 from filters import apply_blur, apply_contour, apply_edge, apply_greyscale, apply_sharpen, apply_smooth
 
 app = Flask(__name__)
@@ -25,17 +25,17 @@ def apply_filter():
         img = Image.open('uploaded_image.jpg')
 
         if filter_name == "blur":
-            filtered_img = img.apply_blur
+            filtered_img = apply_blur(img)
         elif filter_name == "contour":
-            filtered_img = img.apply_contour
+            filtered_img = apply_contour(img)
         elif filter_name == "edge":
-            filtered_img = img.apply_edge
+            filtered_img = apply_edge(img)
         elif filter_name == "grayscale":
-            filtered_img = img.apply_greyscale
+            filtered_img = apply_greyscale(img)
         elif filter_name == "sharpen":
-            filtered_img = img.apply_sharpen
+            filtered_img = apply_sharpen(img)
         elif filter_name == "smooth":
-            filtered_img = img.apply_smooth
+            filtered_img = apply_smooth(img)
         
         output_buffer = io.BytesIO()
         filtered_img.save(output_buffer, format="JPEG")
